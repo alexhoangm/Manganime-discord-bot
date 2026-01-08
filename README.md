@@ -2,7 +2,7 @@
 
 A high-performance, asynchronous Discord bot designed to track manga releases, manage user subscriptions, and notify communities of new chapters in real-time.
 
-> ** v2.0 Refactor (2024):** This project was originally built in 2022 and completely refactored in **2024** to migrate from synchronous blocking calls to a fully **asynchronous event-driven architecture**.
+> **v2.0 Refactor (2024):** This project was originally built in 2022 and completely refactored in **2024** to migrate from synchronous blocking calls to a fully **asynchronous event-driven architecture**.
 
 ## Key Updates in v2.0
 * **AsyncIO Migration:** Replaced `threading` and `requests` with `asyncio` and `aiohttp`, eliminating event loop blocking and improving concurrency by 40%.
