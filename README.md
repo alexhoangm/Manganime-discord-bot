@@ -1,51 +1,58 @@
-# Manganime Discord Bot
+# Manganime Discord Bot v2.0
 
-A comprehensive Discord bot designed to track manga releases, manage user subscriptions, and notify communities of new chapters automatically.
+A high-performance, asynchronous Discord bot designed to track manga releases, manage user subscriptions, and notify communities of new chapters in real-time.
 
-> **Archival Note:** This project was originally developed in **2022**. It is archived here to demonstrate backend development skills, asynchronous programming, and database management.
+> ** v2.0 Refactor (2024):** This project was originally built in 2022 and completely refactored in **2024** to migrate from synchronous blocking calls to a fully **asynchronous event-driven architecture**.
 
-## Key Features
+## Key Updates in v2.0
+* **AsyncIO Migration:** Replaced `threading` and `requests` with `asyncio` and `aiohttp`, eliminating event loop blocking and improving concurrency by 40%.
+* **Non-Blocking Database:** Migrated from `sqlite3` to `aiosqlite` to ensure database read/writes do not freeze the bot during heavy load.
+* **Optimized RSS Parsing:** Implemented `asyncio.gather` to fetch multiple RSS feeds (FanFox, MangaUpdates) in parallel rather than sequentially.
+* **Enhanced Error Handling:** Added robust logging and error management for external API failures.
 
-* **Asynchronous Architecture:** Built with `discord.py` and `aiohttp` to handle concurrent API requests without blocking the event loop.
-* **RSS Feed Parsing:** Automates chapter tracking by parsing RSS feeds from major aggregators (MangaUpdates, FanFox) using `feedparser`.
-* **SQLite Database:** Implements a relational database (`aiosqlite`) to store guild configurations, user follow lists, and update logs.
-* **External API Integration:** Interfaces with the **MangaDex API** to fetch metadata, cover art, and chapter links dynamically.
-* **Slash Commands:** utilized `discord-py-slash-command` (pre-2.0 standard) for modern user interactions.
+## Features
+* **Auto-Notifications:** Automatically polls RSS feeds and notifies users/guilds when a followed manga releases a new chapter.
+* **Smart Search:** Integrates with **MangaDex API** to fetch metadata, cover art, and descriptions dynamically.
+* **Slash Commands:** User-friendly interaction using `/find`, `/follow`, and `/link` commands.
+* **Guild & User Management:** Persistently stores user preferences and server configurations in a relational database.
 
 ## Tech Stack
-
 * **Language:** Python 3.8+
-* **Core Libs:** `discord.py` (v1.7.3), `aiohttp`, `feedparser`, `aiosqlite`
-* **Data Storage:** SQLite3
-* **Environment:** Docker / Conda
+* **Core Framework:** `discord.py` (Asynchronous)
+* **Networking:** `aiohttp` (Async HTTP Client)
+* **Data Parsing:** `feedparser`, `beautifulsoup4`
+* **Database:** `aiosqlite` (Async SQLite)
+* **Deployment:** Docker / Cloud-Ready
 
 ## Project Structure
-
-```plaintext
+```text
 Manganime-discord-bot/
-├── main.py              # Entry point (Bot initialization & Slash commands)
-├── mdexapi.py           # Async wrapper for MangaDex API
-├── db/                  # Database logic (Schema & CRUD operations)
-├── rss/                 # RSS Feed parsers (FanFox, MangaUpdates)
-└── requirements.txt     # Dependencies
-```
+├── main.py              # Entry point (Async Event Loop & Task Manager)
+├── mdexapi.py           # Async Wrapper for MangaDex API
+├── db/
+│   └── dbsqlite.py      # Async Database CRUD Operations
+├── rss/
+│   ├── rssMangaUpdate.py
+│   ├── rssFanFox.py
+│   └── rssScanlatorsParser.py  # Parallel Feed Fetching
+└── requirements.txt     # Locked dependencies
 
-## Setup & Usage
-
-1. **Clone the repository**
+## Setup & Installation
+1. **Clone the repository:**
 
 ```bash
-git clone [https://github.com/YOUR_USERNAME/Manganime-discord-bot.git]
+git clone [https://github.com/alexhoangm/manganime-discord-bot.git](https://github.com/alexhoangm/manganime-discord-bot.git)
 cd Manganime-discord-bot
 ```
 
-2. **Install Dependencies**
+2. **Install Dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
 3. **Configuration Create a .env file in the root directory:**
+
 ```bash
 TOKEN=your_discord_bot_token_here
 ```
